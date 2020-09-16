@@ -7,11 +7,14 @@ The use the API KEY found on this page: https://qr-room.grant-miller.com/setting
 import requests
 import config
 
+# HOST_URL = 'http://192.168.68.105:5000/'
+HOST_URL = 'https://qr-room.grant-miller.com/'
+
 s = requests.session()
 
 # Get all the rooms for your account
 resp = s.get(
-    url='http://192.168.68.105:5000/api/get_rooms',
+    url='{}/api/get_rooms'.format(HOST_URL),
     data={'apiKey': config.APIKEY},  # get your API key from https://qr-room.grant-miller.com/settings
 )
 print('resp.text=', resp.text)
@@ -24,7 +27,7 @@ rooms = resp.json()
 # some URLs are one-time-use only, as indicated by the room['dynamicQR'] property
 for room in rooms:
     resp = s.get(
-        url='http://192.168.68.105:5000/api/get_book_now_url',
+        url='{}api/get_book_now_url'.format(HOST_URL),
         data={
             'apiKey': config.APIKEY,  # get your API key from https://qr-room.grant-miller.com/settings
             'roomID': room['id'],
@@ -39,7 +42,7 @@ for room in rooms:
 # some QRs are one-time-use only. This is indicated by the room['dynamicQR'] property
 for room in rooms:
     resp = s.get(
-        url='http://192.168.68.105:5000/api/get_book_now_qr',
+        url='{}api/get_book_now_qr'.format(HOST_URL),
         data={
             'apiKey': config.APIKEY,  # get your API key from https://qr-room.grant-miller.com/settings
             'roomID': room['id'],
