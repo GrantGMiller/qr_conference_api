@@ -21,6 +21,7 @@ rooms = resp.json()
 
 # Get the "book now" url for each room
 # opening this url will ask the user to login with their Microsoft account and then book the room
+# some URLs are one-time-use only, as indicated by the room['dynamicQR'] property
 for room in rooms:
     resp = s.get(
         url='http://192.168.68.105:5000/api/get_book_now_url',
